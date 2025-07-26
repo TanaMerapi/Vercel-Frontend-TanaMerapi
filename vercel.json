@@ -1,29 +1,18 @@
 {
   "version": 2,
-  "builds": [
-    {
-      "src": "package.json",
-      "use": "@vercel/static-build",
-      "config": {
-        "env": {
-          "CI": "false"
-        }
-      }
-    }
-  ],
   "routes": [
+    {
+      "src": "/manifest.json",
+      "headers": { "content-type": "application/json" },
+      "dest": "/manifest.json"
+    },
     {
       "src": "/static/(.*)",
       "headers": { "cache-control": "public, max-age=31536000, immutable" },
       "dest": "/static/$1"
     },
     {
-      "src": "/favicon.ico",
-      "dest": "/favicon.ico"
-    },
-    {
-      "src": "/manifest.json",
-      "dest": "/manifest.json"
+      "handle": "filesystem"
     },
     {
       "src": "/(.*)",
