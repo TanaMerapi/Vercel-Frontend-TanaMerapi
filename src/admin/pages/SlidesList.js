@@ -9,7 +9,7 @@ import Loader from '../../shared/components/Loader';
 import Message from '../../shared/components/Message';
 import api from '../../utils/api';
 import { getImageUrl } from '../../utils/imageUrl';
-import { Plus, Eye, Trash2 } from 'lucide-react';
+import { Plus } from 'lucide-react';
 
 const SlidesList = () => {
   const [slides, setSlides] = useState([]);

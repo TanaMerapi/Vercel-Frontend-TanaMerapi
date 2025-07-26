@@ -11,8 +11,6 @@ const ClientLayout = () => {
   const [loading, setLoading] = useState(true);
   const location = useLocation(); // This hook gives us the current route
   
-  // Check if we're on the homepage
-  const isHomePage = location.pathname === '/' || location.pathname === '/home';
   
   useEffect(() => {
     const fetchSocialMedia = async () => {

@@ -6,7 +6,6 @@ import Loader from '../../shared/components/Loader';
 import { formatCurrency } from '../../utils/formatCurrency';
 import { getImageUrl } from '../../utils/imageUrl'; // Import the helper
 import { Search, Package, Menu } from 'lucide-react';
-import SocialMediaIcon from '../../shared/components/SocialMediaIcon';
 import logoImage from '../../images/logo.png';
 
 const PackagesPage = () => {

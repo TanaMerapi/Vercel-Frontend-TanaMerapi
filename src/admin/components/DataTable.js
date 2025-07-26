@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import './DataTable.scss';
-import { Search, ChevronDown, ChevronUp, MoreVertical } from 'lucide-react';
+import { Search, ChevronDown, ChevronUp } from 'lucide-react';
 import Message from '../../shared/components/Message';
 
 const DataTable = ({ 

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import './ImageUploader.scss';
-import { Upload, X } from 'lucide-react';
+import { Upload } from 'lucide-react';
 import ImagePreview from '../../shared/components/ImagePreview';
 import { getImageUrl } from '../../utils/imageUrl';
 
