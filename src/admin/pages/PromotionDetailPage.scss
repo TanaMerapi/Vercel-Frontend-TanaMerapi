@@ -1,0 +1,456 @@
+.promotion-detail-page {
+  min-height: 100vh;
+  background-color: #f8f9fa;
+  
+  .back-button-container {
+    padding: 1.5rem 0 1rem;
+    
+    .back-button {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: none;
+      border: none;
+      color: #666;
+      cursor: pointer;
+      font-size: 0.875rem;
+      padding: 0.5rem;
+      border-radius: 0.375rem;
+      transition: all 0.2s;
+      
+      &:hover {
+        background-color: #f0f0f0;
+        color: #333;
+      }
+    }
+  }
+  
+  .promotion-detail-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 1.5rem 2rem;
+  }
+  
+  // Hero Section
+  .promotion-hero {
+    background: white;
+    border-radius: 0.75rem;
+    overflow: hidden;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.07);
+    margin-bottom: 2rem;
+    
+    .hero-image {
+      position: relative;
+      height: 300px;
+      overflow: hidden;
+      
+      img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: transform 0.3s;
+        
+        &:hover {
+          transform: scale(1.02);
+        }
+      }
+      
+      .hero-overlay {
+        position: absolute;
+        top: 1rem;
+        right: 1rem;
+        display: flex;
+        flex-direction: column;
+        gap: 0.75rem;
+        align-items: flex-end;
+        
+        .discount-badge {
+          display: flex;
+          align-items: center;
+          gap: 0.5rem;
+          background: linear-gradient(135deg, #f44336, #e53935);
+          color: white;
+          padding: 0.75rem 1rem;
+          border-radius: 2rem;
+          font-weight: 600;
+          font-size: 1.125rem;
+          box-shadow: 0 4px 12px rgba(244, 67, 54, 0.3);
+        }
+        
+        .status-badge {
+          padding: 0.5rem 1rem;
+          border-radius: 1.5rem;
+          font-weight: 500;
+          font-size: 0.875rem;
+          backdrop-filter: blur(10px);
+          
+          &.active {
+            background-color: rgba(46, 125, 50, 0.9);
+            color: white;
+          }
+          
+          &.expired {
+            background-color: rgba(117, 117, 117, 0.9);
+            color: white;
+          }
+          
+          &.upcoming {
+            background-color: rgba(255, 152, 0, 0.9);
+            color: white;
+          }
+        }
+      }
+    }
+    
+    .hero-content {
+      padding: 2rem;
+      
+      .promotion-title {
+        font-size: 2rem;
+        font-weight: 700;
+        color: #212529;
+        margin-bottom: 1rem;
+        line-height: 1.2;
+      }
+      
+      .promotion-description {
+        font-size: 1.125rem;
+        color: #6c757d;
+        margin-bottom: 1.5rem;
+        line-height: 1.6;
+      }
+      
+      .promotion-meta {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 1.5rem;
+        
+        .meta-item {
+          display: flex;
+          align-items: center;
+          gap: 0.5rem;
+          color: #495057;
+          
+          svg {
+            color: #6c757d;
+          }
+          
+          .status-text {
+            font-weight: 500;
+            
+            &.active {
+              color: #2e7d32;
+            }
+            
+            &.expired {
+              color: #757575;
+            }
+            
+            &.upcoming {
+              color: #ff9800;
+            }
+          }
+        }
+      }
+    }
+  }
+  
+  // Packages Section
+  .packages-section {
+    background: white;
+    border-radius: 0.75rem;
+    padding: 2rem;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.07);
+    margin-bottom: 2rem;
+    
+    h2 {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      font-size: 1.5rem;
+      font-weight: 600;
+      color: #212529;
+      margin-bottom: 1.5rem;
+      
+      svg {
+        color: #4CAF50;
+      }
+    }
+    
+    .packages-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 1.5rem;
+      
+      .package-card {
+        border: 1px solid #e9ecef;
+        border-radius: 0.75rem;
+        overflow: hidden;
+        background: white;
+        transition: all 0.3s;
+        
+        &:hover {
+          box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+          transform: translateY(-2px);
+        }
+        
+        .package-image {
+          position: relative;
+          height: 200px;
+          overflow: hidden;
+          
+          img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.3s;
+          }
+          
+          &:hover img {
+            transform: scale(1.05);
+          }
+          
+          .discount-overlay {
+            position: absolute;
+            top: 0.75rem;
+            left: 0.75rem;
+            background: #f44336;
+            color: white;
+            padding: 0.5rem 0.75rem;
+            border-radius: 1rem;
+            font-weight: 600;
+            font-size: 0.875rem;
+          }
+        }
+        
+        .package-content {
+          padding: 1.5rem;
+          
+          .package-name {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: #212529;
+            margin-bottom: 1rem;
+          }
+          
+          .package-prices {
+            margin-bottom: 1rem;
+            
+            .price-comparison {
+              display: flex;
+              align-items: center;
+              gap: 1rem;
+              margin-bottom: 0.5rem;
+              
+              .original-price {
+                font-size: 1rem;
+                color: #6c757d;
+                text-decoration: line-through;
+              }
+              
+              .discounted-price {
+                font-size: 1.375rem;
+                font-weight: 700;
+                color: #f44336;
+              }
+            }
+            
+            .savings {
+              font-size: 0.875rem;
+              color: #28a745;
+              font-weight: 500;
+            }
+          }
+          
+          .package-description {
+            color: #6c757d;
+            line-height: 1.5;
+            margin: 0;
+          }
+        }
+      }
+    }
+  }
+  
+  // Terms Section
+  .terms-section {
+    background: white;
+    border-radius: 0.75rem;
+    padding: 2rem;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.07);
+    margin-bottom: 2rem;
+    
+    h2 {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      font-size: 1.5rem;
+      font-weight: 600;
+      color: #212529;
+      margin-bottom: 1.5rem;
+      
+      svg {
+        color: #17a2b8;
+      }
+    }
+    
+    .terms-content {
+      margin-bottom: 2rem;
+      
+      .terms-text {
+        p {
+          color: #495057;
+          line-height: 1.6;
+          margin-bottom: 0.75rem;
+          
+          &:last-child {
+            margin-bottom: 0;
+          }
+        }
+      }
+      
+      .no-terms {
+        color: #6c757d;
+        font-style: italic;
+        margin: 0;
+      }
+    }
+    
+    .promotion-info {
+      border-top: 1px solid #e9ecef;
+      padding-top: 1.5rem;
+      
+      .info-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 1rem;
+        
+        .info-item {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          padding: 0.75rem 1rem;
+          background: #f8f9fa;
+          border-radius: 0.5rem;
+          
+          label {
+            font-weight: 500;
+            color: #495057;
+          }
+          
+          span {
+            font-weight: 600;
+            
+            &.discount-text {
+              color: #f44336;
+            }
+            
+            &.status-text {
+              &.active {
+                color: #2e7d32;
+              }
+              
+              &.expired {
+                color: #757575;
+              }
+              
+              &.upcoming {
+                color: #ff9800;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+  
+  // CTA Section
+  .cta-section {
+    background: linear-gradient(135deg, #4CAF50, #45a049);
+    border-radius: 0.75rem;
+    padding: 2rem;
+    text-align: center;
+    color: white;
+    
+    .cta-content {
+      h3 {
+        font-size: 1.5rem;
+        font-weight: 600;
+        margin-bottom: 0.75rem;
+      }
+      
+      p {
+        font-size: 1.125rem;
+        opacity: 0.9;
+        margin-bottom: 1.5rem;
+      }
+      
+      .contact-button {
+        background: white;
+        color: #4CAF50;
+        border: none;
+        padding: 1rem 2rem;
+        border-radius: 0.5rem;
+        font-weight: 600;
+        font-size: 1.125rem;
+        cursor: pointer;
+        transition: all 0.2s;
+        
+        &:hover {
+          transform: translateY(-2px);
+          box-shadow: 0 4px 12px rgba(255, 255, 255, 0.3);
+        }
+      }
+    }
+  }
+  
+  // Responsive Design
+  @media (max-width: 768px) {
+    .promotion-detail-container {
+      padding: 0 1rem 2rem;
+    }
+    
+    .promotion-hero {
+      .hero-image {
+        height: 200px;
+        
+        .hero-overlay {
+          top: 0.75rem;
+          right: 0.75rem;
+          
+          .discount-badge {
+            padding: 0.5rem 0.75rem;
+            font-size: 1rem;
+          }
+        }
+      }
+      
+      .hero-content {
+        padding: 1.5rem;
+        
+        .promotion-title {
+          font-size: 1.5rem;
+        }
+        
+        .promotion-meta {
+          flex-direction: column;
+          align-items: flex-start;
+          gap: 0.75rem;
+        }
+      }
+    }
+    
+    .packages-section,
+    .terms-section {
+      padding: 1.5rem;
+    }
+    
+    .packages-grid {
+      grid-template-columns: 1fr;
+    }
+    
+    .info-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+}

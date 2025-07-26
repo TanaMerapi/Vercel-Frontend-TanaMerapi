@@ -1,0 +1,76 @@
+/* Custom variables */
+$cream: #FFF1CA;
+$yellow: #FFB823;
+$light-green: #708A58;
+$dark-green: #2D4F2B;
+
+/* Customize Bulma variables */
+$primary: $dark-green;
+$link: $light-green;
+$info: $yellow;
+$success: $light-green;
+$warning: $yellow;
+$danger: #ff6b6b;
+$background: $cream;
+$text: #333;
+$text-strong: #222;
+
+/* Import Bulma after customization */
+@import 'bulma/sass/utilities/_all.sass';
+@import 'bulma/sass/base/_all.sass';
+@import 'bulma/sass/elements/_all.sass';
+@import 'bulma/sass/form/_all.sass';
+@import 'bulma/sass/components/_all.sass';
+@import 'bulma/sass/grid/_all.sass';
+@import 'bulma/sass/helpers/_all.sass';
+@import 'bulma/sass/layout/_all.sass';
+
+/* Global styles */
+body {
+  font-family: 'Poppins', sans-serif;
+  background-color: $cream;
+  color: $text;
+}
+
+.btn-primary {
+  background-color: $dark-green;
+  color: white;
+  border: none;
+  transition: all 0.3s ease;
+  
+  &:hover {
+    background-color: darken($dark-green, 10%);
+    color: white;
+  }
+}
+
+.btn-secondary {
+  background-color: $yellow;
+  color: $dark-green;
+  border: none;
+  transition: all 0.3s ease;
+  
+  &:hover {
+    background-color: darken($yellow, 10%);
+    color: $dark-green;
+  }
+}
+
+.section-title {
+  font-size: 2rem;
+  font-weight: 700;
+  color: $dark-green;
+  margin-bottom: 2rem;
+  position: relative;
+  display: inline-block;
+  
+  &::after {
+    content: '';
+    position: absolute;
+    bottom: -10px;
+    left: 0;
+    width: 60px;
+    height: 4px;
+    background-color: $yellow;
+  }
+}

@@ -1,0 +1,52 @@
+.message-container {
+  position: relative;
+  padding: 1rem;
+  border-radius: 4px;
+  margin-bottom: 1.5rem;
+  animation: fadeIn 0.3s ease-in-out;
+  
+  &.success {
+    background-color: #708A58;
+    color: white;
+  }
+  
+  &.error {
+    background-color: #ff6b6b;
+    color: white;
+  }
+  
+  &.info {
+    background-color: #FFB823;
+    color: #2D4F2B;
+  }
+  
+  p {
+    margin: 0;
+    padding-right: 30px;
+  }
+  
+  .close-button {
+    position: absolute;
+    top: 0.5rem;
+    right: 0.5rem;
+    background: transparent;
+    border: none;
+    color: inherit;
+    cursor: pointer;
+    padding: 0.25rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

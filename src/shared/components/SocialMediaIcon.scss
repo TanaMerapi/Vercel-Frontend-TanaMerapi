@@ -1,0 +1,109 @@
+.social-media-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  background-color: rgba(255, 255, 255, 0.1);
+  border-radius: 50%;
+  backdrop-filter: blur(10px);
+  border: 2px solid rgba(255, 255, 255, 0.2);
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+  
+  &:hover {
+    transform: scale(1.1) rotate(5deg);
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
+  }
+  
+  img {
+    width: 24px;
+    height: 24px;
+    object-fit: contain;
+    transition: all 0.3s ease;
+    z-index: 2;
+  }
+  
+  &:hover img {
+    transform: scale(1.1);
+  }
+  
+  // Platform-specific hover effects
+  &.instagram:hover {
+    background: linear-gradient(45deg, #405DE6, #5851DB, #833AB4, #C13584, #E1306C, #FD1D1D);
+    border-color: transparent;
+  }
+  
+  &.tiktok:hover {
+    background-color: #000000;
+    border-color: #00f2ea;
+    
+    &::before {
+      content: '';
+      position: absolute;
+      top: -2px;
+      left: -2px;
+      right: -2px;
+      bottom: -2px;
+      background: linear-gradient(90deg, #00f2ea, #ff0050);
+      border-radius: 50%;
+      z-index: 1;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+    
+    &:hover::before {
+      opacity: 0.6;
+    }
+  }
+  
+  &.whatsapp:hover {
+    background-color: #25D366;
+    border-color: #128C7E;
+  }
+  
+  // Large variant for hero section
+  &.large {
+    width: 60px;
+    height: 60px;
+    
+    img {
+      width: 36px;
+      height: 36px;
+    }
+  }
+  
+  // Responsive adjustments
+  @media (max-width: 768px) {
+    &.large {
+      width: 50px;
+      height: 50px;
+      
+      img {
+        width: 30px;
+        height: 30px;
+      }
+    }
+  }
+  
+  @media (max-width: 480px) {
+    width: 35px;
+    height: 35px;
+    
+    img {
+      width: 20px;
+      height: 20px;
+    }
+    
+    &.large {
+      width: 45px;
+      height: 45px;
+      
+      img {
+        width: 26px;
+        height: 26px;
+      }
+    }
+  }
+}
