@@ -83,6 +83,11 @@ api.interceptors.response.use(
           window.location.href = '/admin/login';
         }
       }
+      
+      // Special handling for CORS errors (often manifest as 403)
+      if (error.response.status === 403) {
+        console.error('Possible CORS issue - check server CORS configuration');
+      }
     } else if (error.request) {
       // The request was made but no response was received
       console.error('Request error (no response):', {
@@ -128,6 +133,7 @@ api.uploadFile = async (url, formData, config = {}) => {
       return `${key}: ${value}`;
     }));
     
+    // For file uploads, set specific content type
     const response = await api.post(url, formData, {
       headers: {
         'Content-Type': 'multipart/form-data',
