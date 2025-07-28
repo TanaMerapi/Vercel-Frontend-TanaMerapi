@@ -264,7 +264,9 @@ const MenuDetailPage = () => {
             </div>
             <div className="menu-cta">
               <a 
-                href={`https://wa.me/6281234567890?text=Halo,%20saya%20tertarik%20dengan%20${menuItem.name}.%20Apakah%20masih%20tersedia?`} 
+                href={socialMedia?.find(sm => sm.platform.toLowerCase() === 'whatsapp')?.url 
+                  ? `${socialMedia.find(sm => sm.platform.toLowerCase() === 'whatsapp').url}?text=Halo,%20saya%20tertarik%20dengan%20${menuItem.name}.%20Apakah%20masih%20tersedia?` 
+                  : '#'}
                 target="_blank" 
                 rel="noopener noreferrer"
                 className="order-button"

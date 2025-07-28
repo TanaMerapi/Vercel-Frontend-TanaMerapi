@@ -256,6 +256,11 @@ const PackageDetailPage = () => {
               src={getImageUrl(packageData.image_url)} 
               alt={packageData.name}
             />
+            {packageData.promotion && (
+              <div className="promotion-badge">
+                {packageData.promotion.discount_percent}% OFF
+              </div>
+            )}
           </div>
           
           <div className="package-info">
@@ -263,8 +268,42 @@ const PackageDetailPage = () => {
             
             <div className="package-price">
               <span>Harga Paket:</span>
-              <div className="price">{formatCurrency(packageData.price)}</div>
+              {packageData.promotion ? (
+                <div className="price-container">
+                  <div className="original-price">
+                    {formatCurrency(packageData.price * 100 / (100 - packageData.promotion.discount_percent))}
+                  </div>
+                  <div className="discounted-price">
+                    {formatCurrency(packageData.price)}
+                  </div>
+                  <div className="discount-badge">
+                    {packageData.promotion.discount_percent}% OFF
+                  </div>
+                </div>
+              ) : (
+                <div className="price">{formatCurrency(packageData.price)}</div>
+              )}
             </div>
+            
+            {packageData.promotion && (
+              <div className="package-promotion">
+                <h3>Promo Spesial</h3>
+                <div className="promotion-info">
+                  <div className="promotion-title">{packageData.promotion.title}</div>
+                  <div className="promotion-description">{packageData.promotion.description}</div>
+                  <div className="promotion-validity">
+                    Berlaku sampai: {new Date(packageData.promotion.valid_until).toLocaleDateString('id-ID', {
+                      day: 'numeric',
+                      month: 'long',
+                      year: 'numeric'
+                    })}
+                  </div>
+                  <Link to={`/promotions/${packageData.promotion.id}`} className="view-promo-button">
+                    Lihat Detail Promo
+                  </Link>
+                </div>
+              </div>
+            )}
             
             {packageData.description && (
               <div className="package-description">
@@ -289,7 +328,9 @@ const PackageDetailPage = () => {
             
             <div className="package-cta">
               <a 
-                href={`https://wa.me/6281234567890?text=Halo,%20saya%20tertarik%20dengan%20${packageData.name}.%20Apakah%20masih%20tersedia?`} 
+                href={socialMedia?.find(sm => sm.platform.toLowerCase() === 'whatsapp')?.url 
+                  ? `${socialMedia.find(sm => sm.platform.toLowerCase() === 'whatsapp').url}?text=Halo,%20saya%20tertarik%20dengan%20${packageData.name}.%20Apakah%20masih%20tersedia?` 
+                  : '#'}
                 target="_blank" 
                 rel="noopener noreferrer"
                 className="book-button"
@@ -311,10 +352,26 @@ const PackageDetailPage = () => {
                       src={getImageUrl(pkg.image_url)} 
                       alt={pkg.name}
                     />
+                    {pkg.promotion && (
+                      <div className="related-promotion-badge">
+                        {pkg.promotion.discount_percent}% OFF
+                      </div>
+                    )}
                   </div>
                   <div className="related-info">
                     <h3>{pkg.name}</h3>
-                    <div className="related-price">{formatCurrency(pkg.price)}</div>
+                    {pkg.promotion ? (
+                      <div className="related-price-container">
+                        <span className="related-original-price">
+                          {formatCurrency(pkg.price * 100 / (100 - pkg.promotion.discount_percent))}
+                        </span>
+                        <span className="related-discounted-price">
+                          {formatCurrency(pkg.price)}
+                        </span>
+                      </div>
+                    ) : (
+                      <div className="related-price">{formatCurrency(pkg.price)}</div>
+                    )}
                   </div>
                 </Link>
               ))}

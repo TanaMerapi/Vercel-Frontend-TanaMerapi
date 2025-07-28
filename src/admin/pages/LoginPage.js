@@ -13,6 +13,7 @@ const LoginPage = () => {
     username: '',
     password: ''
   });
+  const [debugInfo, setDebugInfo] = useState(null);
   
   useEffect(() => {
     // Check if user is already logged in
@@ -23,9 +24,10 @@ const LoginPage = () => {
         .then(() => {
           navigate('/admin');
         })
-        .catch(() => {
+        .catch((err) => {
           // If token is invalid, remove it
           localStorage.removeItem('accessToken');
+          console.error('Token validation failed:', err);
         });
     }
   }, [navigate]);
@@ -45,8 +47,15 @@ const LoginPage = () => {
     
     setLoading(true);
     setError(null);
+    setDebugInfo(null);
     
     try {
+      // First, let's check if the API is reachable
+      const healthCheck = await fetch(process.env.REACT_APP_API_URL.replace('/api', ''));
+      const healthCheckData = await healthCheck.text();
+      console.log('API Health Check:', healthCheckData);
+      
+      // Now attempt login
       const response = await api.post('/auth/login', formData);
       
       if (response.data && response.data.accessToken) {
@@ -54,9 +63,18 @@ const LoginPage = () => {
         navigate('/admin');
       } else {
         setError('Terjadi kesalahan saat login');
+        setDebugInfo('Received response but no access token');
       }
     } catch (error) {
       console.error('Login failed:', error);
+      
+      let errorDetail = {
+        message: 'Unknown error',
+        status: error.response?.status || 'No status',
+        data: error.response?.data || 'No data'
+      };
+      
+      setDebugInfo(JSON.stringify(errorDetail, null, 2));
       
       if (error.response) {
         // Handle different error responses
@@ -64,11 +82,15 @@ const LoginPage = () => {
           setError('Username tidak ditemukan');
         } else if (error.response.status === 400) {
           setError('Password salah');
+        } else if (error.response.status === 500) {
+          setError('Terjadi kesalahan server. Cek log untuk detail.');
         } else {
-          setError('Terjadi kesalahan saat login');
+          setError(`Error status: ${error.response.status} - ${error.response.data?.message || 'Unknown error'}`);
         }
+      } else if (error.request) {
+        setError('Tidak dapat terhubung ke server. Periksa koneksi Anda.');
       } else {
-        setError('Tidak dapat terhubung ke server');
+        setError('Terjadi kesalahan saat login: ' + error.message);
       }
     } finally {
       setLoading(false);
@@ -135,6 +157,14 @@ const LoginPage = () => {
             Kembali ke Website
           </a>
         </div>
+        
+        {debugInfo && (
+          <div className="debug-info">
+            <h4>Debug Information:</h4>
+            <pre>{debugInfo}</pre>
+            <p>API URL: {process.env.REACT_APP_API_URL}</p>
+          </div>
+        )}
       </div>
     </div>
   );

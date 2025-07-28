@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Link, NavLink, useParams, useNavigate } from 'react-router-dom';
+import { Link, NavLink, useParams, useNavigate, useOutletContext } from 'react-router-dom';
 import api from '../../utils/api';
 import './PromotionDetailPage.scss';
 import Loader from '../../shared/components/Loader';
@@ -11,6 +11,7 @@ import logoImage from '../../images/logo.png';
 const PromotionDetailPage = () => {
   const { id } = useParams();
   const navigate = useNavigate();
+  const socialMedia = useOutletContext();
   const [promotion, setPromotion] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -243,7 +244,9 @@ const PromotionDetailPage = () => {
                   <p>Jangan lewatkan kesempatan untuk mendapatkan diskon spesial ini. Hubungi kami sekarang untuk informasi lebih lanjut atau pemesanan.</p>
                 </div>
                 <a 
-                  href={`https://wa.me/6281234567890?text=Halo,%20saya%20tertarik%20dengan%20promo%20${promotion.title}.%20Bisakah%20saya%20mendapatkan%20informasi%20lebih%20lanjut?`} 
+                  href={socialMedia?.find(sm => sm.platform.toLowerCase() === 'whatsapp')?.url 
+                    ? `${socialMedia.find(sm => sm.platform.toLowerCase() === 'whatsapp').url}?text=Halo,%20saya%20tertarik%20dengan%20promo%20${promotion.title}.%20Bisakah%20saya%20mendapatkan%20informasi%20lebih%20lanjut?` 
+                    : '#'}
                   target="_blank" 
                   rel="noopener noreferrer"
                   className="book-button"

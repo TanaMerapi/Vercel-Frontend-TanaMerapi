@@ -7,6 +7,9 @@ const API_URL = process.env.REACT_APP_API_URL || 'http://localhost:5000/api';
 const api = axios.create({
   baseURL: API_URL,
   withCredentials: true,
+  headers: {
+    'Content-Type': 'application/json',
+  }
 });
 
 // Request interceptor for adding the auth token
@@ -59,6 +62,8 @@ api.interceptors.response.use(
     return response;
   },
   async (error) => {
+    console.error('API Error:', error);
+    
     // If unauthorized and in admin area, redirect to login
     if (error.response && error.response.status === 401) {
       if (window.location.pathname.includes('/admin')) {

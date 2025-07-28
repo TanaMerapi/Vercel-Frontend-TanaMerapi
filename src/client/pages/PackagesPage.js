@@ -202,6 +202,11 @@ const PackagesPage = () => {
                       src={getImageUrl(pkg.image_url)} 
                       alt={pkg.name}
                     />
+                    {pkg.promotion && (
+                      <div className="promotion-badge">
+                        {pkg.promotion.discount_percent}% OFF
+                      </div>
+                    )}
                   </div>
                   <div className="package-info">
                     <h3>{pkg.name}</h3>
@@ -214,7 +219,17 @@ const PackagesPage = () => {
                     <p>{pkg.description}</p>
                     
                     <div className="package-footer">
-                      <div className="package-price">{formatCurrency(pkg.price)}</div>
+                      <div className="package-price-container">
+                        {pkg.promotion ? (
+                          <>
+                            <div className="original-price">{formatCurrency(pkg.price * 100 / (100 - pkg.promotion.discount_percent))}</div>
+                            <div className="discounted-price">{formatCurrency(pkg.price)}</div>
+                            <div className="discount-badge">{pkg.promotion.discount_percent}% OFF</div>
+                          </>
+                        ) : (
+                          <div className="package-price">{formatCurrency(pkg.price)}</div>
+                        )}
+                      </div>
                       <Link to={`/packages/${pkg.id}`} className="details-button">
                         Lihat Detail
                       </Link>
