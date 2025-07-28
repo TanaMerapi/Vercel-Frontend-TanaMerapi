@@ -1,4 +1,3 @@
-// Updated ImageUploader.js with better error handling and debugging
 import React, { useState, useEffect } from 'react';
 import './ImageUploader.scss';
 import { Upload, AlertCircle } from 'lucide-react';
