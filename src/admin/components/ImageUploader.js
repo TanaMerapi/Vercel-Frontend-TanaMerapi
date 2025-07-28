@@ -1,20 +1,20 @@
-import React, { useState, useRef } from 'react';
+import React, { useState } from 'react';
 import './ImageUploader.scss';
-import { Upload, Image, AlertCircle } from 'lucide-react';
+import { Upload } from 'lucide-react';
+import ImagePreview from '../../shared/components/ImagePreview';
 import { getImageUrl } from '../../utils/imageUrl';
 
-const ImageUploader = ({ 
-  onChange, 
-  value, 
-  preview, 
-  label, 
-  helpText, 
+const ImageUploader = ({
+  onChange,
+  value,
+  preview,
+  apiUrl,
+  label = 'Upload Gambar',
   required = false,
-  apiUrl
+  accept = 'image/*',
+  helpText
 }) => {
   const [error, setError] = useState(null);
-  const [isUploading, setIsUploading] = useState(false);
-  const fileInputRef = useRef(null);
   
   const handleFileChange = (e) => {
     const file = e.target.files[0];
@@ -24,88 +24,76 @@ const ImageUploader = ({
     }
     
     // Validate file type
-    const validTypes = ['image/jpeg', 'image/png', 'image/webp'];
-    if (!validTypes.includes(file.type)) {
-      setError('Format file tidak valid. Gunakan JPG, PNG, atau WEBP');
+    if (!file.type.startsWith('image/')) {
+      setError('File harus berupa gambar');
       return;
     }
     
     // Validate file size (max 5MB)
     if (file.size > 5 * 1024 * 1024) {
-      setError('Ukuran file terlalu besar. Maksimal 5MB');
+      setError('Ukuran file tidak boleh lebih dari 5MB');
       return;
     }
     
     setError(null);
     onChange(file);
-    
-    // Create a preview URL
-    const reader = new FileReader();
-    reader.onload = () => {
-      setPreviewUrl(reader.result);
-    };
-    reader.readAsDataURL(file);
   };
   
-  const [previewUrl, setPreviewUrl] = useState(null);
-  
-  const handleClickUpload = () => {
-    fileInputRef.current.click();
+  const handleRemove = () => {
+    onChange(null);
   };
   
-  const renderPreview = () => {
-    // Use uploaded file preview
-    if (previewUrl) {
-      return <img src={previewUrl} alt="Preview" />;
+  const getPreviewUrl = () => {
+    if (!preview) return null;
+    
+    if (typeof preview === 'string') {
+      // Use our utility function to handle both Cloudinary and local URLs
+      return getImageUrl(preview);
     }
     
-    // Use existing image preview (e.g., for edit)
-    if (preview) {
-      return <img src={getImageUrl(preview)} alt="Preview" />;
-    }
-    
-    // No preview
-    return (
-      <div className="upload-placeholder">
-        <Upload size={32} />
-        <p>Klik untuk mengunggah gambar</p>
-      </div>
-    );
+    // If preview is a File object
+    return URL.createObjectURL(preview);
   };
   
   return (
     <div className="image-uploader">
-      <label>
-        {label} {required && <span className="required">*</span>}
-      </label>
-      
-      <div className="uploader-container" onClick={handleClickUpload}>
-        <div className="preview-container">
-          {renderPreview()}
-          {(isUploading) && (
-            <div className="overlay">
-              <div className="spinner"></div>
-            </div>
-          )}
-        </div>
-        
-        <input
-          type="file"
-          ref={fileInputRef}
-          onChange={handleFileChange}
-          accept="image/jpeg,image/png,image/webp"
-          style={{ display: 'none' }}
-        />
+      <div className="uploader-header">
+        <label>
+          {label}
+          {required && <span className="required">*</span>}
+        </label>
       </div>
       
-      {error && (
-        <div className="error-message">
-          <AlertCircle size={16} />
-          <span>{error}</span>
+      {preview ? (
+        <div className="preview-container">
+          <ImagePreview
+            src={getPreviewUrl()}
+            alt="Preview"
+            onRemove={handleRemove}
+          />
         </div>
+      ) : (
+        <label className="upload-area">
+          <input
+            type="file"
+            accept={accept}
+            onChange={handleFileChange}
+            hidden
+          />
+          <div className="upload-content">
+            <Upload size={36} />
+            <span className="upload-text">
+              Klik atau seret gambar ke sini
+            </span>
+            <span className="upload-hint">
+              Format: JPG, PNG, GIF (Maks. 5MB)
+            </span>
+          </div>
+        </label>
       )}
       
       {helpText && <p className="help-text">{helpText}</p>}
+      {error && <p className="error-text">{error}</p>}
     </div>
   );
 };
