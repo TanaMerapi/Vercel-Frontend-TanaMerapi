@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
+// Updated ImageUploader.js with better error handling and debugging
+import React, { useState, useEffect } from 'react';
 import './ImageUploader.scss';
-import { Upload } from 'lucide-react';
+import { Upload, AlertCircle } from 'lucide-react';
 import ImagePreview from '../../shared/components/ImagePreview';
 import { getImageUrl } from '../../utils/imageUrl';
 
@@ -15,6 +16,21 @@ const ImageUploader = ({
   helpText
 }) => {
   const [error, setError] = useState(null);
+  const [fileDetails, setFileDetails] = useState(null);
+  
+  // Debug log when component updates
+  useEffect(() => {
+    console.log('ImageUploader state:', {
+      hasValue: !!value,
+      hasPreview: !!preview,
+      previewType: typeof preview,
+      error
+    });
+    
+    if (preview && typeof preview === 'string') {
+      console.log('Preview URL:', preview);
+    }
+  }, [value, preview, error]);
   
   const handleFileChange = (e) => {
     const file = e.target.files[0];
@@ -22,6 +38,21 @@ const ImageUploader = ({
     if (!file) {
       return;
     }
+    
+    // Log file details for debugging
+    console.log('File selected:', {
+      name: file.name,
+      type: file.type,
+      size: file.size,
+      lastModified: file.lastModified
+    });
+    
+    setFileDetails({
+      name: file.name,
+      type: file.type,
+      size: formatFileSize(file.size),
+      lastModified: new Date(file.lastModified).toLocaleString()
+    });
     
     // Validate file type
     if (!file.type.startsWith('image/')) {
@@ -40,7 +71,15 @@ const ImageUploader = ({
   };
   
   const handleRemove = () => {
+    setFileDetails(null);
+    setError(null);
     onChange(null);
+  };
+  
+  const formatFileSize = (bytes) => {
+    if (bytes < 1024) return bytes + ' B';
+    else if (bytes < 1048576) return (bytes / 1024).toFixed(1) + ' KB';
+    else return (bytes / 1048576).toFixed(1) + ' MB';
   };
   
   const getPreviewUrl = () => {
@@ -71,6 +110,13 @@ const ImageUploader = ({
             alt="Preview"
             onRemove={handleRemove}
           />
+          {fileDetails && (
+            <div className="file-details">
+              <p className="file-name">{fileDetails.name}</p>
+              <p className="file-size">{fileDetails.size}</p>
+              <p className="file-type">{fileDetails.type}</p>
+            </div>
+          )}
         </div>
       ) : (
         <label className="upload-area">
@@ -93,7 +139,13 @@ const ImageUploader = ({
       )}
       
       {helpText && <p className="help-text">{helpText}</p>}
-      {error && <p className="error-text">{error}</p>}
+      
+      {error && (
+        <div className="error-container">
+          <AlertCircle size={16} />
+          <p className="error-text">{error}</p>
+        </div>
+      )}
     </div>
   );
 };
