@@ -210,7 +210,7 @@ const SiteSettingsPage = () => {
             <div className="image-preview">
               {settings.home_image ? (
                 <img 
-                  src={`${process.env.REACT_APP_API_URL?.replace('/api', '')}${settings.home_image}`} 
+                  src={`${settings.home_image}`} 
                   alt="Gambar Beranda" 
                 />
               ) : (

@@ -80,7 +80,7 @@ const PackageDetailPage = () => {
         const otherPackages = allPackagesResponse.data.filter(pkg => 
           pkg.id !== parseInt(id)
         );
-        const randomPackages = otherPackages.sort(() => 0.5 - Math.random()).slice(0, 2);
+        const randomPackages = otherPackages.sort(() => 0.5 - Math.random()).slice(0, 3);
         setRelatedPackages(randomPackages);
       } catch (error) {
         console.error('Failed to fetch package:', error);
