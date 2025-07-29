@@ -100,8 +100,8 @@ const HomePage = () => {
         ]);
         
         setSlides(slidesRes.data);
-        setMenuItems(menuItemsRes.data.slice(0, 3)); // Just get first 3
-        setPackages(packagesRes.data.slice(0, 3)); // Just get first 3
+        setMenuItems(menuItemsRes.data.slice(0, 4)); 
+        setPackages(packagesRes.data.slice(0, 3)); 
         setPromotions(promotionsRes.data);
         
         // Process site settings
